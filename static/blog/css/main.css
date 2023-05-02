@@ -128,7 +128,7 @@ article > div {
   line-height:1.2;
   white-space:pre-line;
   margin-bottom:1rem;
-  
+
 }
 .article-photo {
   max-width:500px;
@@ -156,7 +156,6 @@ article > div {
 .article-form {
   margin:0px;
   margin-bottom:30px;
-  background-color: #646464;
   min-width:0px;
   padding:0px;
   border:0px;
@@ -246,7 +245,7 @@ input, textarea {
 .fileContainer {
   overflow:hidden;
   position:relative;
-  border:2px dashed #DADADA;
+  border:2px dashed  rgb(241, 241, 241);;
   float:left;
   padding:2em;
   margin-top:0px;
