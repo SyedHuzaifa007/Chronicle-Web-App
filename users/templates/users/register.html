@@ -1,22 +1,33 @@
 {% extends "blog/base.html" %}
 {% block content %}
+
+<div>
+<header>
+<h1 style="font-family: 'Amanda', cursive; color: #3c1ad1;font-weight:50; font-size: 4rem;margin-left:70px;margin-right: -150px; text-align: center; text-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);">Chronicle</h1>
+</header>
+</div>
 <style>
+
 body {
  background-color:  rgb(241, 241, 241);
 }
 .poop
       { 
-   background-color: #ffffff;
-        border: 0px;
-   
-        border-radius: 20px;
+        background-color: #ffffff;
+  border: 0px;
+  border-radius: 20px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+
       }
       .hehe
       {
         background-color: #3c1ad1 ;
       }
 </style>
-<div class="col-12 col-sm-9 col-md-7 col-lg-5 " style="padding:0px;margin-bottom:15px;">
+<div class="col-12 col-sm-9 col-md-7 col-lg-5 " style="padding:0px;margin-bottom:-20px;margin-top :160px; margin-left: -150px;">
   <div class="content-section poop">
     <form method="POST">
       {% if form.non_field_errors %}
