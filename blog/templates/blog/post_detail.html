@@ -6,6 +6,10 @@
   background-color: rgb(226, 208, 248);
   border-radius: 20px;
 }
+.bold
+{
+font-family: 1000;
+}
 </style>
 <div class="col-12 " style="padding:0px;">
   <article class="content-section details">
@@ -14,7 +18,7 @@
         <p>{{ object.date_posted|date:"F j, Y, H:i" }}</p>
       </div>
       <p class="article-title">{% if object.title %}{{object.title}}{% else %}{{ object.date_posted|date:"F j, Y, H:i" }}{% endif %}</p>
-      <p class="article-content" style="padding-bottom: 1rem;">{{ object.content }}</p>
+      <p class="article-content" style="padding-bottom: rem;">{{ object.content }}</p>
       {% if object.image %}<img src="{{ object.image.url}}" class="article-photo">{% endif %}
       {% if object.audio %}<audio controls style="opacity:1;"><source src="{{ object.audio.url}}" type="audio/mpeg"></audio>{% endif %}
 
