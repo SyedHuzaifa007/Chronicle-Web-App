@@ -19,14 +19,44 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
   </head>
   <body>
+    <style>
+     body {  
+      background-color: rgb(241, 241, 241);
+ background-size: cover;
+ min-height: 100vh;
 
+      }
+      .poop
+      { 
+   background-color: #ffffff;
+        border: 0px;
+        border-radius: 20px;
+        color: rgb(241, 241, 241);
+      }
+      .Log
+      {
+       
+  margin-top: 20px;
+  margin-left: 250px;
+  margin-right: 250px;
 
+      }
+      </style>
+    <header>
+      <div>
+        <p><br><br><br></p>
+        <h1 style="font-family: 'Amanda', cursive;color: #3c1ad1; font-size: 4rem; text-align: center; text-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);">Chronicle</h1>
+      </div>
+    </header>
 
     <!-- TODO: Here goes your content! -->
-    <div class="col-12 col-sm-7 col-md-6 col-lg-5" style="padding:0px;margin-bottom:15px;">
-      <div class="content-section">
+    <div class="col-15 col-sm-7 col-md-6 col-lg-5 Log" >
+      <div class="content-section poop" >
         <form method="POST">
           {% if form.non_field_errors %}
           <div class="alert alert-block alert-danger">
@@ -35,25 +65,36 @@
           {% endif %}
           {% csrf_token %}
           <div class="auth_headline">
-            <p>Login</p>
+            <p style="color:#000000">Login</p>
           </div>
-          <h6>Email</h6>
-          <input id="id_username" name="username" placeholder="Enter Email" class="auth_input" type="text" autocomplete="username" required autofocus>
+          <p style="color:#303030;font-size: 93%;">Username</p>
+          <style>
+          #id_username
+          { 
+            margin-top: -13px;
+           border-color: #ffffff;
+           background-color: rgb(241, 241, 241);
+          }
+          #id_password
+          {
+            margin-top: -13px;
+           border-color: #ffffff;
+           background-color: rgb(241, 241, 241);
+          }
+        </style>
+          <input id="id_username" name="username" placeholder="Enter Username" class="auth_input" type="text" autocomplete="username" required autofocus>
           <br>
-          <h6>Password</h6>
+          <p style="color:#303030;font-size: 93%;">Password</p>
           <input id="id_password" name="password" placeholder="Enter Password" class="auth_input" type="password" autocomplete="current-password" required>
-          <button class="button auth_button" type="submit">Log in</button>
+          <button class="button auth_button" type="submit" style="background:#3c1ad1;">Log in</button>
         </form>
         <div style="padding-top:1rem;margin-top:10px;">
-          <div class="auth_note">
-            Need An Account? <a style="margin-left:4px;color:#009b72;" href="{% url 'register' %}">Sign Up Now</a>
+          <div class="auth_note" style="color:#000000">
+            Need An Account? <a style="margin-left:4px;color:#3c1ad1" href="{% url 'register' %}">Sign Up Now</a>
           </div>
         </div>
       </div>
     </div> 
-
-
-
     <!-- Including Bootstrap JS (with its jQuery dependency) so that dynamic components work -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

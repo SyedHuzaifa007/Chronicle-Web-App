@@ -4,40 +4,106 @@
 
 <!-- Search form -->
 <!-- Display the search form only if there are posts to search in -->
+
+
+<h1 style="font-family: 'Amanda', cursive; color: #3c1ad1;font-weight:50; font-size: 4rem; text-align: center; text-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);">Chronicle</h1>
 {% if posts or request.GET.search %}
-<div id="inputHomepage">
+<style>
+
+  #searchFieldHomepage {
+    background-color: #ffffff;
+    width: calc(100% - 70px);
+    box-sizing: border-box;
+    margin-top: 150px;
+    margin-left: -230px;
+  }
+  
+  #searchButtonHomepage {
+    position: relative;
+    width: 35px;
+    height: 35px;
+  top:-35px;
+  }
+
+  #searchButtonHomepage img {
+    height: 100%;
+    width: 100%;
+
+  }
+  
+</style>
+<div id="inputHomepage" >
   <form action="" method="get">
     <input type="text" id="searchFieldHomepage" name="search" placeholder="Search" value="{{ request.GET.search }}">
-    <button type="submit" value="Search" id="searchButtonHomepage">
-      <div>
-        <img src="{% static 'blog/img/search.png' %}">
-      </div>
+    <button type="submit" value="Search" id="searchButtonHomepage" style="margin-left: 70px;">
+      <img src="{% static 'blog/img/search.png' %}">
     </button>
   </form>
 </div>
 {% endif %}
-
+<p style="font-size: 200% ;font-weight:bold;color:#000000;margin-top: 170px;margin-left: -570px;">Your Posts</p>
 <div class="col-12 main_content">
   <!-- Posts -->
   {% if posts %}
     {% for post in posts %}
-      <article>
-        <div>
-          <div class="article-datetime">
-            <p>{{ post.date_posted|date:"F j, Y, H:i" }}</p>
-          </div>
-          <div class="article-headline">
-            <a class="article-title" href="{% url 'post-detail' post.id %}">
-              {% if post.title %}{{post.title}}{% else %}{{ post.date_posted|date:"F j, Y, H:i" }}{% endif %}
-            </a>
-          </div>
-          <p class="article-content">{{ post.content }}</p>
-          {% if post.image %}<img src="{{ post.image.url}}" class="imageMain">{% endif %}
-          {% if post.audio %}<audio controls><source src="{{ post.audio.url}}" type="audio/mpeg"></audio>{% endif %}
+    <article>
+      <div>
+        <div class="article-datetime">
+          <p style="color:rgb(0, 0, 0); margin-top: -20px;">{{ post.date_posted|date:"F j, Y, H:i" }}</p>
         </div>
-      </article>
+        <div class="article-headline">
+          <style>
+         
+            /* Style the link */
+            .article-title {
+              color: #000000;
+              text-decoration: none; /* Remove underline */
+              font-weight: bold; /* Make the text bold */
+            }
+    
+            /* Hover effect */
+            .article-title:hover {             
+              color: #000000;
+              font-weight: bold;
+              text-decoration: none;
+              display: inline-block;
+            }
+            
+            .oof {
+              padding: 10px 20px;
+              border:0px solid #f5eeee;
+              border-radius: 20px;
+              margin-bottom: 20px;
+              background-size: 100% 100%;
+              height: 300px;
+            }
+            
+            .OOF2 {
+              background-size: cover;
+              border-radius: 20px;
+              border-color: #000000;
+            } 
+          </style>
+          <div class="col-15 col-sm-15 col-md-15 col-lg-15" >
+            <div class="oof OOF2" style="background-color: rgb(226, 208, 248);"> 
+              <a class="article-title" href="{% url 'post-detail' post.id %}">
+                {{ post.title }}
+              </a>            
+              <p class="article-content" style="color:#3a3131;">{{ post.content }}</p>       
+              {% if post.image %}
+              <img src="{{ post.image.url }}" class="imageMain" style="border-radius: 20px;">
+              {% endif %}
+              {% if post.audio %}
+              <audio controls><source src="{{ post.audio.url }}" type="audio/mpeg"></audio>
+              {% endif %}
+            </div>
+          </div>
+        </div> 
+      </div>
+    </article>   
+   
     {% endfor %}
-
+  
     <!-- Pagination -->
     {% if is_paginated %}
 
@@ -75,7 +141,6 @@
         {% endif %}
       </div>
     {% endif %}
-
   {% else %}
     {% if request.GET.search %}
       <p class="no_posts">No posts were found</p>
@@ -84,4 +149,5 @@
     {% endif %}
   {% endif %}
 </div>
+
 {% endblock content %}
