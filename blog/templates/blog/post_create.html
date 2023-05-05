@@ -1,7 +1,12 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-
+<style>
+  .back
+  {
+    background-color: rgb(226, 208, 248);
+  }
+</style>
 <!-- A popup for date and time selection -->
 <script>
   $(function () {
@@ -21,7 +26,7 @@
 </script>
 
 <div class="col-12" style="padding:0px;">
-  <div class="content-section">
+  <div class="content-section back">
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="article-form">

@@ -1,5 +1,16 @@
 // Drag and drop file upload functionality
+const link = document.querySelector('.article-title');
+const colors = ['#dabbcd', '#5c5c5c', '#007acc']; // Add your colors here
+let index = 0;
 
+link.addEventListener('mouseenter', () => {
+  link.style.color = colors[index];
+  index = (index + 1) % colors.length;
+});
+
+link.addEventListener('mouseleave', () => {
+  link.style.color = '';
+});
 function fileContainerChangeFile(e,element,id) {
 	element.parentElement.classList.remove('fileContainerDragOver');
 	try {

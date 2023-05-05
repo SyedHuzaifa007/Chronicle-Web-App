@@ -12,7 +12,7 @@ from .forms import CreateViewForm, UpdateViewForm
 from django.db.models import Q, TextField
 from django.db.models.functions import Lower
 TextField.register_lookup(Lower, "lower")
-
+import re
 
 # if users are allowed to view anyone's posts, not only theirs, then leave this and the next class uncommented
 class PostListView(LoginRequiredMixin, ListView):

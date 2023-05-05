@@ -4,40 +4,114 @@
 
 <!-- Search form -->
 <!-- Display the search form only if there are posts to search in -->
+
+<div style="margin-left:200px;">
+<h1 style="font-family: 'Amanda', cursive; color: #3c1ad1;font-weight:50; font-size: 4rem; text-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); margin-top:10px;">Welcome To Chronicle</h1>
+</div>
 {% if posts or request.GET.search %}
+<style>
+
+  #searchFieldHomepage {
+    background-color: #ffffff;
+    width: calc(100% - 70px);
+    box-sizing: border-box;
+    margin-top: 150px;
+    margin-left: -230px;
+  }
+  
+  #searchButtonHomepage {
+    position: relative;
+    width: 35px;
+    height: 35px;
+  top:-35px;
+  }
+
+  #searchButtonHomepage img {
+    height: 100%;
+    width: 100%;
+
+  }
+  
+</style>
 <div id="inputHomepage">
-  <form action="" method="get">
+  <form action="" method="get" style="margin-left:600px; margin-top:-150px;">
+  <form action="" method="get" style="margin-left:585px; margin-top:-150px;">
     <input type="text" id="searchFieldHomepage" name="search" placeholder="Search" value="{{ request.GET.search }}">
-    <button type="submit" value="Search" id="searchButtonHomepage">
-      <div>
-        <img src="{% static 'blog/img/search.png' %}">
-      </div>
-    </button>
+    <!-- <button type="submit" value="Search" id="searchButtonHomepage" style="margin-left: 70px;">
+      <img src="{% static 'blog/img/search.png' %}">
+    </button> -->
   </form>
 </div>
+<style>
+  .text
+  {
+    text-decoration: none;
+  }
+</style>
+<p style="font-family:'Amanda';font-size: 200% ;font-weight:bold;margin-left:-350px;color:#000000;text-decoration: none;">Your Posts</p>
 {% endif %}
-
 <div class="col-12 main_content">
   <!-- Posts -->
   {% if posts %}
     {% for post in posts %}
-      <article>
-        <div>
-          <div class="article-datetime">
-            <p>{{ post.date_posted|date:"F j, Y, H:i" }}</p>
-          </div>
-          <div class="article-headline">
-            <a class="article-title" href="{% url 'post-detail' post.id %}">
-              {% if post.title %}{{post.title}}{% else %}{{ post.date_posted|date:"F j, Y, H:i" }}{% endif %}
-            </a>
-          </div>
-          <p class="article-content">{{ post.content }}</p>
-          {% if post.image %}<img src="{{ post.image.url}}" class="imageMain">{% endif %}
-          {% if post.audio %}<audio controls><source src="{{ post.audio.url}}" type="audio/mpeg"></audio>{% endif %}
+    <article>
+      <div>
+        <div class="article-datetime">
+          <p style="color:rgb(0, 0, 0); margin-top: -20px; margin-left:-10px;">{{ post.date_posted|date:"F j, Y, H:i" }}</p>
         </div>
-      </article>
+        <div class="article-headline">
+          <style>
+         
+            /* Style the link */
+            .article-title {
+              color: #000000;
+              text-decoration: none; /* Remove underline */
+              font-weight: bold; /* Make the text bold */
+            }
+    
+            /* Hover effect */
+            .article-title:hover {             
+              color: #000000;
+              font-weight: bold;
+              text-decoration: none;
+              display: inline-block;
+            }
+            
+            .oof {
+              padding: 10px 20px;
+              border-radius: 20px;
+              background-size: 100% 100%;
+              height: 200px;
+            }
+            
+            .OOF2 {
+              margin-left:-15px;
+              border:1px solid #000000;
+              border-radius: 20px;
+              border-color: #000000;
+            } 
+          </style>
+            <div class="container OOF2" style="background-color: rgb(226, 208, 248);"> 
+              <a class="article-title" style="font-family:'Amanda';" href="{% url 'post-detail' post.id %}">
+                {{ post.title }}
+              </a>            
+              <p class="article-content" style="color:#3a3131;">{{ post.content }}</p>       
+              {% if post.image %}
+              <img src="{{ post.image.url }}" class="imageMain container" style="border-radius: 20px; margin-left:-20px;">
+              {% endif %}
+              {% if post.audio %}
+              <audio controls><source src="{{ post.audio.url }}" type="audio/mpeg"></audio>
+               </div>
+               </div>
+           </div> 
+     
+      </div>
+              {% endif %}        
+       
+    </article>   
+   
     {% endfor %}
-
+  
     <!-- Pagination -->
     {% if is_paginated %}
 
@@ -75,7 +149,6 @@
         {% endif %}
       </div>
     {% endif %}
-
   {% else %}
     {% if request.GET.search %}
       <p class="no_posts">No posts were found</p>
@@ -84,4 +157,6 @@
     {% endif %}
   {% endif %}
 </div>
+
 {% endblock content %}
+
