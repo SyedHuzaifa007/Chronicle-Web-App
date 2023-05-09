@@ -7,14 +7,40 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from .forms import CreateViewForm, UpdateViewForm
+import speech_recognition as sr
+from django.http import JsonResponse
 
 # enabling case-insensitive search in MySQL databases
 from django.db.models import Q, TextField
 from django.db.models.functions import Lower
 TextField.register_lookup(Lower, "lower")
-import re
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from datetime import datetime
+import pdfkit
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 
 # if users are allowed to view anyone's posts, not only theirs, then leave this and the next class uncommented
+class GeneratePdf(APIView ):
+    def get(self,request):
+        # save_pdf({datetime.today()})
+        return Response({"status":200})
+
+def voice_to_text(request):
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Speak:")
+            audio = r.listen(source)
+        
+        try:
+            text = r.recognize_google(audio)
+            return JsonResponse({'text': text})
+        except sr.UnknownValueError:
+            return JsonResponse({'error': 'Could not understand audio'})
+        except sr.RequestError as e:
+            return JsonResponse({'error': 'Could not request results; {0}'.format(e)})
+    
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'blog/home.html'
@@ -36,30 +62,30 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 
 # if users are allowed to view only their own posts, not anyone else's, then leave this and the next class uncommented
-# class PostListView(LoginRequiredMixin, ListView):
-#     model = Post
-#     template_name = 'blog/home.html'
-#     context_object_name = 'posts' # the name of a context variable with the queryset results
-#     ordering = ['-date_posted']
-#     paginate_by = 20
-#
-#     # modifying the function for returning posts
-#     def get_queryset(self):
-#         # if there is a search query in the URL parameter, then use it to filter the results
-#         search_query = self.request.GET.get('search', '')
-#         # using Q for case-insensitive search in a MySQL database
-#         # filtering for posts where the user is the author
-#         queryset = Post.objects.filter(Q(content__lower__contains=search_query)).filter(author_id=self.request.user.id).order_by('-date_posted')
-#         return queryset
-#
-# class PostDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-#     model = Post
-#
-#     def test_func(self):
-#         post = self.get_object()
-#         if self.request.user == post.author:
-#             return True
-#         return False
+class PostListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'blog/home.html'
+    context_object_name = 'posts' # the name of a context variable with the queryset results
+    ordering = ['-date_posted']
+    paginate_by = 20
+
+    # modifying the function for returning posts
+    def get_queryset(self):
+        # if there is a search query in the URL parameter, then use it to filter the results
+        search_query = self.request.GET.get('search', '')
+        # using Q for case-insensitive search in a MySQL database
+        # filtering for posts where the user is the author
+        queryset = Post.objects.filter(Q(content__lower__contains=search_query)).filter(author_id=self.request.user.id).order_by('-date_posted')
+        return queryset
+
+class PostDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Post
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

@@ -12,7 +12,7 @@
 <style>
 
   #searchFieldHomepage {
-    background-color: #ffffff;
+    background-color: rgb(226, 208, 248) ;
     width: calc(100% - 70px);
     box-sizing: border-box;
     margin-top: 150px;
@@ -41,7 +41,7 @@
       <img src="{% static 'blog/img/search.png' %}">
     </button> -->
   </form>
-</div>
+</div> 
 <style>
   .text
   {
@@ -87,12 +87,11 @@
                   border:1px solid #000000;
                   border-radius: 20px;
                   border-color: #000000;
-                  min-width: 70vh;
+                  min-width: 100vh;
                   max-width:70vh;
-                  max-height: 70vh;;
+                  max-height: 500vh;;
                   min-height: 70vh;
-                } 
-                
+                }              
                 .aud {
                   max-width:500px;
                   max-height:500px;
@@ -108,7 +107,7 @@
                 <a class="article-title" style="font-family:'Amanda';" href="{% url 'post-detail' post.id %}">
                   {{ post.title }}
                 </a>            
-                <p class="article-content" style="font-weight:600;color:#3a3131;">{{ post.content }}</p> 
+                <p class="article-content" style="font-weight:600;color:#3a3131;"> {{ post.content|slice:":100" }}.... </p> 
     
                 {% if post.image %}
                   <img src="{{ post.image.url }}" class="imageMain container" style="border-radius: 20px; margin-left:-20px; max-width: 50vh;max-height: 50vh;">             
@@ -119,7 +118,8 @@
               </div>
             </div>
           </div>
-        </article>   
+        </article>  
+     
       {% endfor %}
     {% endif %}
   

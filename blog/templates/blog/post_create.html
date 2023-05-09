@@ -54,17 +54,22 @@
         {% else %}
           <input name="title" type="text" class="is-valid" id="id_title" value="{{ form.title.value|default_if_none:'' }}" placeholder="Title" style="margin-top:10px;">
         {% endif %}
-
         {% if form.content.errors %}
-          <textarea name="content" cols="40" rows="5" class="textarea is-invalid" required id="id_content" value="" placeholder="Message (required)" style="margin-top:20px;">{{ form.content.value|default_if_none:'' }}</textarea>
+        <div class="form-group">
+          <label for="content">Message (required)</label>
+          <textarea name="content" cols="40" rows="5" class="form-control is-invalid" required id="id_content" placeholder="Type your message or use voice input"></textarea>
           {% for error in form.content.errors %}
             <div class="invalid-feedback">
               {{ error }}
             </div>
           {% endfor %}
-        {% else %}
-          <textarea name="content" cols="40" rows="5" class="textarea is-valid" required id="id_content" value="" placeholder="Message" style="margin-top:20px;">{{ form.content.value|default_if_none:'' }}</textarea>
-        {% endif %}
+        </div>
+      {% else %}
+        <div class="form-group">
+          <label for="content">Message</label>
+          <textarea name="content" cols="40" rows="5" class="form-control is-valid" id="id_content" placeholder="Type your message or use voice input">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+      {% endif %}
 
         {% if form.date_posted.errors %}
           <input name="date_posted" type="text" class="is-invalid" id="id_date_posted" value="{{ form.date_posted.value }}" style="margin-top:20px;">
@@ -76,7 +81,6 @@
         {% else %}
           <input name="date_posted" type="text" class="is-valid" id="id_date_posted" value="{{ form.date_posted.value }}" style="margin-top:20px;">
         {% endif %}
-
         <label class="fileContainer" ondragover="dragOver(event,this)" ondragleave="leaveDrop(this)" ondrop="onDrop(event,this)" style="margin-top:20px;">
           <div style="overflow:hidden;text-align:center;">
             <div class="dragDropIcon">
@@ -90,7 +94,6 @@
           <input accept="image/*" name="image" id="id_image" onchange="fileContainerChangeFile(event,this)" style="margin-top:25px;" type="file"/>
         </label>
         <input type="checkbox" name="image-clear" id="image-clear_id" style="display:none;">
-
         {% if form.image.errors %}
           {% for error in form.image.errors %}
             <div class="invalid-feedback">
@@ -126,7 +129,7 @@
 
           <input name="title" type="text" id="id_title" value="{{ form.title.value|default_if_none:'' }}" placeholder="Title" style="margin-top:10px;">
 
-          <textarea name="content" cols="40" rows="5" class="textarea" required="" id="id_content" value="" placeholder="Message (required)" style="margin-top:20px;">{{ form.content.value|default_if_none:'' }}</textarea>
+          <textarea name="content" cols="40" rows="5" class="textarea" required="" id="id_content" value="" placeholder="Start writing from here..." style="margin-top:20px;">{{ form.content.value|default_if_none:'' }}</textarea>
 
           <input name="date_posted" type="text" id="id_date_posted" value="{{ form.date_posted.value|date:'Y-m-d G:i:s' }}" style="margin-top:20px;">
 
@@ -157,10 +160,56 @@
             <input accept="audio/*" name="audio" id="id_audio" onchange="fileContainerChangeFile(event,this,'audio-clear_id')" style="margin-top:25px;" type="file"/>
           </label>
 
-        {% endif %}
+        {% endif %}    
+          {% csrf_token %}
+          <h3 for="content">Voice To Text</h3>
+<input type="text" name="content-voice" id="content-voice">
+<button type="button" id="start-btn" class="button btn-primary alert_button short_button" style="margin-top:35px;margin-bottom:25px;">Start dictation</button>
+<button type="button" id="stop-btn" class="button btn-secondary alert_button short_button" style="margin-top:35px;margin-bottom:25px;">Stop dictation</button>
+<button type="button" id="save-btn" class="button btn-primary secondary_button short_button" style="margin-top:35px;margin-bottom:25px;margin-top:10px;">Save</button>
 
+<script>
+const startBtn = document.getElementById('start-btn');
+const stopBtn = document.getElementById('stop-btn');
+const contentInput = document.getElementById('content-voice');
+const messageInput = document.getElementById('id_content');
+let recognition = null;
+
+let lastResult = '';
+
+startBtn.addEventListener('click', () => {
+  recognition = new window.webkitSpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+  recognition.start();
+  recognition.onresult = (event) => {
+  const result = event.results[event.results.length - 1];
+  contentInput.value = result[0].transcript;
+};
+});
+
+stopBtn.addEventListener('click', () => {
+  if (recognition) {
+    recognition.stop();
+  }
+});
+
+const saveBtn = document.getElementById('save-btn');
+saveBtn.addEventListener('click', () => {
+  // Append the text spoken from voice to the existing content
+  messageInput.value += ' ' + contentInput.value;
+
+  // Submit the form when the save button is clicked
+  const form = document.querySelector('form');
+  form.submit();
+});
+</script>
+        </form> 
+        
+        
+                
       </div>
-      <button type="submit" class="button secondary_button short_button" style="margin-top:35px;margin-bottom:25px;">Save</button>
       <!-- Returning non-field errors. -->
       {% if form.errors %}
         {% for error in form.non_field_errors %}

@@ -43,6 +43,7 @@ a, a:hover {
 /* Navigation */
 
 .vertical_nav {
+  background-color: #000000;
   position:fixed;
   width: 70px;
   height:100%;
@@ -54,6 +55,7 @@ a, a:hover {
 }
 .vertical_nav:hover {
   opacity:1.0;
+
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
@@ -126,7 +128,7 @@ article > div {
 .article-content {
   margin-top:25px;
   font-size:17px;
-
+  line-height:1.2;
   white-space:pre-line;
   margin-bottom:1rem;
 
@@ -327,19 +329,14 @@ input, textarea {
 .imageMain {
   max-width:500px;
   max-height:500px;
-  opacity:0.5;
+  opacity:1;
   vertical-align:middle;
   border-style:none;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
 }
-.imageMain:hover {
-  opacity:1.0;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-}
+
 audio {
   display:block;
   width:80%;

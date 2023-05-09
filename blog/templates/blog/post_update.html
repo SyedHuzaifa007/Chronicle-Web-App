@@ -37,43 +37,13 @@
 </style>
 </style>
 <div class="col-12" style="padding:0px;">
- 
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
-
-    <!-- your form inputs go here -->
-
     </form>
   </div>
 </div>
-<script>
-  // select the button element
-  const exportPdfBtn = document.querySelector('#export-pdf-btn');
-
-  // define the function that generates the PDF file
-  function generatePdf() {
-    // select the HTML element you want to export to PDF
-    const element = document.querySelector('html');
-
-    // define the options for the PDF export
-    const options = {
-      filename: 'my-pdf-document.pdf',
-      margin: [0, 0, 0, 0],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { dpi: 192, letterRendering: true },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    };
-
-    // generate the PDF file from the HTML element
-    html2pdf().set(options).from(element).save();
-  }
-
-  // add an event listener to the button element
-  exportPdfBtn.addEventListener('click', generatePdf);
-</script>
 <div class="col-12" style="padding:0px;">
   <div class="content-section back">
-    <button  id="export-pdf-btn">Export to Pdf</button>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="article-form tit">

@@ -4,8 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-
-
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 def register(request):
     # if it is a POST request (a registration form is being submitted)
     if request.method == 'POST':
@@ -45,3 +44,16 @@ def logout_view(request):
     logout(request)
     # calling the 'LoginLogout' that has updated context for the 'LoginView'
     return LoginLogout.as_view(template_name='users/login.html')(request)
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'users/password_reset.html'
+    email_template_name = 'users/password_reset_email.html'
+    subject_template_name = 'users/password_reset_subject.txt'
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'users/password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'users/password_reset_confirm.html'
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+      template_name = 'users/password_reset_complete.html'
